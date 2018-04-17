@@ -32,9 +32,9 @@ for window_size in range(RANGE_MIN, RANGE_MAX, RANGE_STEP):
   output = complete.stderr.split('\n')
   for l in output:
     if "Average throughput" in l:
-      i1 = l.index('(')
-      i2 = l.index('%')
-      throughput = float(l[i1+1:i2])
+      i1 = l.index(':')
+      i2 = l.index(' Mbits/s')
+      throughput = float(l[i1+2:i2-1])
     if "95th percentile signal delay" in l:
       i1 = l.index(':')
       i2 = l.index('ms')
@@ -43,5 +43,5 @@ for window_size in range(RANGE_MIN, RANGE_MAX, RANGE_STEP):
   results.append((window_size, throughput, delay))
 
 print(results)
-with open('output.pickle', 'wb') as f:
+with open('warmupa_data.pickle', 'wb') as f:
   pickle.dump(results, f)
